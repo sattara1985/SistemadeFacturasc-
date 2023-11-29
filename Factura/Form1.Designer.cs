@@ -302,6 +302,7 @@
             this.btnVender.TabIndex = 1;
             this.btnVender.Text = "VENDER";
             this.btnVender.UseVisualStyleBackColor = false;
+            this.btnVender.Click += new System.EventHandler(this.btnVender_Click);
             // 
             // label14
             // 
