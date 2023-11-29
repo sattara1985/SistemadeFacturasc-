@@ -88,6 +88,7 @@ namespace Factura
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
+            
             DataGridViewRow file = new DataGridViewRow();
             file.CreateCells(dgvLista);
             file.Cells[0].Value = lblCodigo.Text;
@@ -99,12 +100,49 @@ namespace Factura
             dgvLista.Rows.Add(file);
 
             lblCodigo.Text= lblNombre.Text= lblPrecio.Text=txtCantidad.Text="";
+            obtenerTotal();
 
         }
 
         public void obtenerTotal()
         {
-            float
+            float constat = 0;
+            int contador = 0;
+            contador = dgvLista.RowCount;
+            for (int i = 0; i < contador; i++)
+            {
+                constat += float.Parse(dgvLista.Rows[i].Cells[4].Value.ToString());
+            }
+            lblTotalPagar.Text= constat.ToString();
+
+        }
+
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult rppta = MessageBox.Show("¿Desea Eliminar el Producto?", "Eliminacion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(rppta == DialogResult.Yes)
+                {
+                    dgvLista.Rows.Remove(dgvLista.CurrentRow);
+
+                }             
+            }
+            catch { }
+            obtenerTotal();
+        }
+
+        private void txtEfectivo_TextChanged(object sender, EventArgs e)
+        {
+            try {
+                lblDevolucion.Text = (float.Parse(txtEfectivo.Text) - float.Parse(lblTotalPagar.Text)).ToString();
+                }
+            catch { }
         }
     }
 }
